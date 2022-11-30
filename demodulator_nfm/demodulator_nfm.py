@@ -50,7 +50,8 @@ class DemodulatorNFM():
         self.q_delay_buffer = np.zeros(self.discriminator_delay)
         self.delay_buffer_idx = 0
 
-        print(f'Discriminator delay: {self.discriminator_delay}')
+        print(f'Discriminator delay in samples (precise): {discriminator_delay_precise}')
+        print(f'Discriminator delay in samples (rounded): {self.discriminator_delay}')
         print(f'Max phase deviation: {max_phase_deviation} Hz * s = {max_phase_deviation * 360} deg')
 
         return self.discriminator_delay
