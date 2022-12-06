@@ -4,21 +4,21 @@ import matplotlib.pyplot as plt
 
 # =========== USER DEFINES =============
 RECEIVER_SAMPLING_FREQUENCY = 100.0e3                     # Hz - Frequency of local oscillator
-OVERSAMPLING_RATIO = 4 * 2
+OVERSAMPLING_RATIO = 4 * 1
 SAMPLING_FREQUENCY = OVERSAMPLING_RATIO * RECEIVER_SAMPLING_FREQUENCY  # Hz - ADC sampling frequency
-DISCRIMINATOR_DELAY_RATIO = 1
+DISCRIMINATOR_DELAY_RATIO = 9
 
 
 # Parameters of modulation signal:
-FM1_CARRIER_FREQ = 102.8e3   # Hz - Carrier frequency of FM signal   103.8!!!
+FM1_CARRIER_FREQ = 147.1e3   # Hz - Carrier frequency of FM signal
 FM1_AMPLITURE = 1            # units - Amplitude of carrier frequency in FM signal
 FM1_FREQ_SENSITIVITY = 1000  #  - frequency sensitivity [ Hz/V ]
 # List of frequency components in modulation signal
-FM1_MOD_FREQ_LIST = [1900, 2200] # Hz
+FM1_MOD_FREQ_LIST = [1040, 1490] # Hz
 # List of amplitudes of frequency components in modulation signal
-FM1_MOD_AMP_LIST =  [0.5,  0.5 ] # units - does not matter in the model (e.g. Volts or Amperes)
+FM1_MOD_AMP_LIST =  [0.6,  0.4 ] # units - does not matter in the model (e.g. Volts or Amperes)
 
-NUMBER_OF_SAMPLES = 8000     # Number of samples for simulation
+NUMBER_OF_SAMPLES = 4000     # Number of samples for simulation
 CUT_SAMPLES_CNT = 150        # Number of samples at the beginning to skip transient process caused by IIR DF
 
 # Calculate delay in polar discriminator and round it to integer
@@ -193,7 +193,7 @@ signal = fm1
 # Apply simplified version of polar frequency discriminator
 [pfd_v2_re_vect, pfd_v2_im_vect]= apply_pfd_simple(i_vect, q_vect, DISCRIMINATOR_DELAY)
 
-# Apply LPF to the output of polar discriminator
+# # Apply LPF to the output of polar discriminator
 [pfd_compl_filt, pfd_re_filt, pfd_im_filt] = apply_lpf_iir(pfd_v2_re_vect, pfd_v2_im_vect)
 
 # Just apply linear scaling to the output signal to be able to plot modulation signal
@@ -204,9 +204,10 @@ else:
     invert = False
 scaled_output = scale_signal(modulation_signal[CUT_SAMPLES_CNT:], pfd_im_filt[CUT_SAMPLES_CNT:], invert)
 
-# plt.figure()
-# plt.plot(modulation_signal[CUT_SAMPLES_CNT:])
-# plt.title("modulation signal ")
+plt.figure()
+plt.plot(modulation_signal[CUT_SAMPLES_CNT:])
+plt.grid()
+plt.title("modulating signal ")
 
 # plt.figure()
 # plt.plot(signal)
@@ -225,24 +226,16 @@ plt.figure()
 plt.plot(pfd_v2_re_vect, "b")
 plt.plot(pfd_v2_im_vect, "r")
 plt.grid()
-plt.title("Re and Im after PFD simple")
-#
-# plt.figure()
-# plt.plot(pfd_v2_i_vect)
-# plt.title(" Im components")
+plt.title("Re and Im after PFD")
 
 # plt.figure()
-# plt.plot(pfd_im_filt[CUT_SAMPLES_CNT:])
-# plt.title("Output")
+# plt.plot(np.angle(pfd_compl_filt, deg = True))
+# plt.grid()
+# plt.title("angle")
 
 plt.figure()
-plt.plot(np.angle(pfd_compl_filt, deg = True))
-plt.grid()
-plt.title("angle")
-
-plt.figure()
-plt.plot(modulation_signal[CUT_SAMPLES_CNT+DISCRIMINATOR_DELAY:], "--b")
-plt.plot(scaled_output[CUT_SAMPLES_CNT:], "r")
+plt.plot(modulation_signal[CUT_SAMPLES_CNT:], "--b")
+plt.plot(scaled_output, "r")
 plt.title("Modulation Signal and Scaled Output Signal")
 plt.grid()
 
