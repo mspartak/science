@@ -63,6 +63,14 @@ DISCRIMINATOR_DELAY_RATIO = 2
 # FM1_MOD_AMP_LIST =  [0.5,  0.5]
 # DISCRIMINATOR_DELAY_RATIO = 20
 
+# # ------- set #6 --------
+# FM1_CARRIER_FREQ = 79.4e3
+# FM1_AMPLITURE = 1
+# FM1_FREQ_SENSITIVITY = 1000
+# FM1_MOD_FREQ_LIST = [880, 1290]
+# FM1_MOD_AMP_LIST =  [0.7,  0.3]
+# DISCRIMINATOR_DELAY_RATIO = 5
+
 NUMBER_OF_SAMPLES = 4000     # Number of samples for simulation
 CUT_SAMPLES_CNT = 150        # Number of samples at the beginning to skip transient process caused by IIR DF
 
