@@ -31,9 +31,15 @@ max_phase_deviation = FM1_FREQ_SENSITIVITY * (DISCRIMINATOR_DELAY / SAMPLING_FRE
 # Digital Filter coefficients
 # LPF, IIR, Order 1. Pass band 0.01*fs, Stop band 0.1*fs, attenuation in stop band -20dB.
 # Numerator coefficients
-DF_BCOEF = [ 0.03054, 0.03054 ]
+# DF_BCOEF = [ 0.03054, 0.03054 ]
+# # Denumerator coefficients
+# DF_ACOEF = [ 1.0, -0.9389]
+
+# LPF, IIR, Order 1. Pass band 0.1*fs, Stop band 0.35*fs, attenuation in stop band -20dB.
+# Numerator coefficients
+DF_BCOEF = [0.1584, 0.1584]
 # Denumerator coefficients
-DF_ACOEF = [ 1.0, -0.9389]
+DF_ACOEF = [1.0, -0.6832]
 # =========== USER DEFINES (end) =============
 
 # Buffers to store digital filter internal data
