@@ -194,7 +194,7 @@ plt.grid()
 plt.savefig("results/" + "raw_" + figure_name)
 
 
-plt.figure()
+plt.figure(figsize=(7.5, 5))
 plt.plot(modulation_signal[CUT_SAMPLES_CNT:], "--", color="black")
 plt.plot(scaled_output[discriminator_delay:], color="red")
 plt.title("Modulating Signal and Scaled Output Signal")
