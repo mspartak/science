@@ -23,15 +23,15 @@ SAMPLING_FREQUENCY = OVERSAMPLING_RATIO * RECEIVER_SAMPLING_FREQUENCY  # Hz - AD
 
 # Below are several sets of parameters used in the experiments:
 
-# # ------- set #1 --------
-FM1_CARRIER_FREQ = 108.9e3
-FM1_AMPLITURE = 1
-FM1_FREQ_SENSITIVITY = 1000
-FM1_MOD_FREQ_LIST = [370, 962]
-FM1_MOD_AMP_LIST =  [0.5,  0.5]
-DISCRIMINATOR_DELAY_RATIO = 2
+# # ------- set #1 (Fig.6 Left) --------
+# FM1_CARRIER_FREQ = 108.9e3
+# FM1_AMPLITURE = 1
+# FM1_FREQ_SENSITIVITY = 1000
+# FM1_MOD_FREQ_LIST = [370, 962]
+# FM1_MOD_AMP_LIST =  [0.5,  0.5]
+# DISCRIMINATOR_DELAY_RATIO = 2
 
-# # ------- set #2 --------
+# # ------- set #2 (Fig.7 Left) --------
 # FM1_CARRIER_FREQ = 103.2e3
 # FM1_AMPLITURE = 1
 # FM1_FREQ_SENSITIVITY = 1000
@@ -39,15 +39,15 @@ DISCRIMINATOR_DELAY_RATIO = 2
 # FM1_MOD_AMP_LIST =  [0.6,  0.4]
 # DISCRIMINATOR_DELAY_RATIO = 1
 
-# ------- set #3 --------
-# FM1_CARRIER_FREQ = 154.3e3
-# FM1_AMPLITURE = 1
-# FM1_FREQ_SENSITIVITY = 1000
-# FM1_MOD_FREQ_LIST = [1040, 1490]
-# FM1_MOD_AMP_LIST =  [0.6,  0.4]
-# DISCRIMINATOR_DELAY_RATIO = 14
+# ------- set #3 (Fig.7 Right) --------
+FM1_CARRIER_FREQ = 154.3e3
+FM1_AMPLITURE = 1
+FM1_FREQ_SENSITIVITY = 1000
+FM1_MOD_FREQ_LIST = [1040, 1490]
+FM1_MOD_AMP_LIST =  [0.6,  0.4]
+DISCRIMINATOR_DELAY_RATIO = 14
 
-# # ------- set #4 --------
+# # ------- set #4 (Fig.6 Right) --------
 # FM1_CARRIER_FREQ = 104.0e3
 # FM1_AMPLITURE = 1
 # FM1_FREQ_SENSITIVITY = 1000
@@ -195,8 +195,8 @@ plt.savefig("results/" + "raw_" + figure_name)
 
 
 plt.figure(figsize=(7.5, 5))
-plt.plot(modulation_signal[CUT_SAMPLES_CNT:], "--", color="black")
-plt.plot(scaled_output[discriminator_delay:], color="red")
+plt.plot(modulation_signal[CUT_SAMPLES_CNT:], "--", color="black", linewidth = 4)
+plt.plot(scaled_output[discriminator_delay:], color="gray", linewidth = 3)
 plt.title("Modulating Signal and Scaled Output Signal")
 plt.xlabel("Samples")
 plt.ylabel("Voltage")
