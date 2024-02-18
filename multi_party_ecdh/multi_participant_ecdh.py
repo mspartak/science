@@ -11,31 +11,31 @@ class Participant():
 
     # Reset all internal variables
     def reset(self):
-        self.__private_key = None
-        self.__public_key = None
-        self.__received_public_key = None
+        self.__prkey = None
+        self.__pubkey = None
+        self.__rx_pubkey = None
         self.public_bytes = None
 
     # Extracts bytes array from public key.
     def __make_public_bytes(self):
-        self.public_bytes = self.__public_key.public_bytes(
-            Encoding.Raw,
-            PublicFormat.Raw)
+        self.public_bytes = \
+            self.__pubkey.public_bytes(Encoding.Raw, PublicFormat.Raw)
 
     # Generate key pair for ECDH
     def generate_key_pair(self):
-        self.__private_key = X25519PrivateKey.generate()
-        self.__public_key = self.__private_key.public_key()
+        self.__prkey = X25519PrivateKey.generate()
+        self.__pubkey = self.__prkey.public_key()
         self.__make_public_bytes()
 
     # Receive public key as byte array and store internal public key
     def receive_public_key(self, pubkey_bytes):
-        self.__received_public_key = X25519PublicKey.from_public_bytes(pubkey_bytes)
+        self.__received_public_key = \
+            X25519PublicKey.from_public_bytes(pubkey_bytes)
 
     # Calculate next public key and shared secret
     def finish_round(self):
-        public_bytes = self.__private_key.exchange(self.__received_public_key)
-        self.__public_key = X25519PublicKey.from_public_bytes(public_bytes)
+        public_bytes = self.__prkey.exchange(self.__received_public_key)
+        self.__pubkey = X25519PublicKey.from_public_bytes(public_bytes)
         self.__make_public_bytes()
 
 # Create list of participants
@@ -58,9 +58,11 @@ for cur_round_idx in range(rounds_count):
             (cur_participant_idx + participants_count - 1) % participants_count
         participants[cur_participant_idx].receive_public_key(
             participants[prev_participant_idx].public_bytes)
-        print(f"Transfer public key from participant {prev_participant_idx} to {cur_participant_idx}")
+        print(f"Transfer public key from participant"
+              f" {prev_participant_idx} to {cur_participant_idx}")
     # Second calculate next public key and shared secret
     for cur_participant in participants:
         cur_participant.finish_round()
         cur_public_bytes =  cur_participant.public_bytes
-        print(f"Participant`s {cur_participant.id} shared secret: {cur_public_bytes.hex()}")
+        print(f"Participant`s {cur_participant.id} shared secret: "
+              f"{cur_public_bytes.hex()}")
